@@ -194,8 +194,8 @@ Após a instalação, crie o arquivo `~/.config/openfortivpn.cfg` com o seguinte
 ```ini
 host = 203.0.113.1
 port = 443
-username = none  # remover se openfortivpn > 1.14
-password = none  # remover se openfortivpn > 1.14
+username = none  # remover se openfortivpn ≥ 1.14
+password = none  # remover se openfortivpn ≥ 1.14
 trusted-cert = digest sha256 do certificado, veja a seção 3.1
 user-cert = url do certificado da seção anterior
 ```
