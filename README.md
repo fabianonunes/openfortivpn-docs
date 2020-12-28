@@ -35,6 +35,7 @@ Após a instalação crie o arquivo `~/.config/openfortivpn.cfg` com o seguinte 
 seu nome de usuário):
 
 ```ini
+# Coloque o IP/porta reais do gateway. O par IP/porta abaixo é apenas um exemplo fictício
 host = 203.0.113.1
 port = 443
 username = __LOGIN__
@@ -192,6 +193,7 @@ Após a instalação, crie o arquivo `~/.config/openfortivpn.cfg` com o seguinte
 > usuário/senha para completar a autenticação. Caso contrário, remova os campos `username` e `password`.
 
 ```ini
+# Coloque o IP/porta reais do gateway. O par IP/porta abaixo é apenas um exemplo fictício
 host = 203.0.113.1
 port = 443
 username = none  # remover se openfortivpn ≥ 1.14
@@ -216,6 +218,7 @@ O `trusted-cert` é o identificador do certificado do servidor da VPN (nada mais
 da representação DER do certificado):
 
 ```bash
+# Coloque o IP:porta reais do gateway. O par IP:porta abaixo é apenas um exemplo fictício
 echo | openssl s_client -showcerts -connect 203.0.113.1:443 2>/dev/null | \
   openssl x509 -outform der | \
   openssl dgst -sha256
