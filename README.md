@@ -221,7 +221,8 @@ echo | openssl s_client -showcerts -connect 203.0.113.1:443 2>/dev/null | \
   openssl dgst -sha256
 ```
 
-Passe o hash resultante para o atributo `trusted-cert` do arquivo de configuração
+Passe o hash resultante para o atributo `trusted-cert` do arquivo de configuração,
+mas antes **confirme o valor com alguém de confiança!**.
 
 ### 3.2. Ubuntu 18.04 de 32 bits
 
