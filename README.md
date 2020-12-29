@@ -195,17 +195,11 @@ $
 
 Após a instalação, crie o arquivo `~/.config/openfortivpn.cfg` com o seguinte conteúdo:
 
-> A partir do OpenFortiVPN 1.14 (Ubuntu 20.10), os campos `username` e `password` só devem ser
-> utilizados nos casos em que o servidor VPN exija simultaneamente o certificado e as credenciais
-> usuário/senha para completar a autenticação. Caso contrário, remova os campos `username` e `password`.
-
 ```ini
 host = IP do gateway
-port = porta do gateway
-username = none # remover se openfortivpn ≥ 1.14
-password = none # remover se openfortivpn ≥ 1.14
-trusted-cert = digest sha256 do certificado, veja a seção 3.1
-user-cert = url do certificado da seção anterior
+port = Porta do gateway
+trusted-cert = Digest sha256 do certificado, veja a seção 3.1
+user-cert = URL do certificado obtido na seção anterior
 ```
 
 ### 2.5. Conecte-se à VPN
