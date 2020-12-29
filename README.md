@@ -4,7 +4,10 @@
 
 > Se você utiliza token, pule para a seção 2.
 
-### 1.1. Ubuntu 18.04 e mais recentes
+### 1.1. Dependências
+
+<details>
+<summary>1.1.1 Ubuntu 18.04 e mais recentes</summary>
 
 Instale o cliente do FortiClientVPN:
 
@@ -12,7 +15,10 @@ Instale o cliente do FortiClientVPN:
 sudo apt-get install openfortivpn
 ```
 
-### 1.2. Ubuntu 16.04 e mais antigos
+</details>
+
+<details>
+<summary>1.1.2 Ubuntu 16.04 e mais antigos</summary>
 
 Compile e instale o openfortivpn:
 
@@ -26,7 +32,9 @@ make
 sudo make install
 ```
 
-### 1.3. Configuração do openfortivpn
+</details>
+
+### 1.2. Configuração do openfortivpn
 
 Após a instalação crie o arquivo `~/.config/openfortivpn.cfg` com o seguinte conteúdo:
 
