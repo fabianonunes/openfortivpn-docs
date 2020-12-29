@@ -47,7 +47,8 @@ sudo openfortivpn -c ~/.config/openfortivpn.cfg
 
 ### 2.1. Dependências
 
-#### 2.1.1. Ubuntu 20.04
+<details>
+<summary>2.1.1. Ubuntu 20.04</summary>
 
 Instale as dependências do SO:
 
@@ -55,7 +56,10 @@ Instale as dependências do SO:
 sudo apt-get install pcscd opensc gnutls-bin libengine-pkcs11-openssl openfortivpn
 ```
 
-#### 2.1.2. Ubuntu 18.04 (64 bits)
+</details>
+
+<details>
+<summary>2.1.2. Ubuntu 18.04 (64 bits)</summary>
 
 Primeiro instale as dependências do SO:
 
@@ -71,7 +75,10 @@ wget http://mirrors.kernel.org/ubuntu/pool/universe/o/openfortivpn/openfortivpn_
 sudo apt-get install -f ./openfortivpn_1.12.0-1_amd64.deb
 ```
 
-#### 2.1.3. Ubuntu 18.04 (32 bits)
+</details>
+
+<details>
+<summary>2.1.3. Ubuntu 18.04 (32 bits)</summary>
 
 Instale as dependências do SO:
 
@@ -92,7 +99,10 @@ make
 sudo make install
 ```
 
-#### 2.1.4. Ubuntu 16.04 (32 e 64 bits)
+</details>
+
+<details>
+<summary>2.1.4. Ubuntu 16.04 (32 e 64 bits)</summary>
 
 Instale as dependências do SO:
 
@@ -129,6 +139,8 @@ cd openfortivpn-1.15.0
 make
 sudo make install
 ```
+
+</details>
 
 ### 2.2. Driver do Token
 
