@@ -1,8 +1,5 @@
 # FortiClient VPN no Linux
 
-**ATENÇÃO**: Este guia assume que o host do OpenFortiVPN é servido na porta `443` do IP fictício `203.0.113.1`.
-Substitua as ocorrências pelos IP e porta verdadeiros, que você deve obter com **alguém de confiança**.
-
 ## 1. Preparo para acesso via login e senha
 
 > Se você utiliza token, pule para a seção 2.
@@ -31,15 +28,13 @@ sudo make install
 
 ### 1.3. Configuração do openfortivpn
 
-Após a instalação crie o arquivo `~/.config/openfortivpn.cfg` com o seguinte conteúdo(substitua `__LOGIN__` por
-seu nome de usuário):
+Após a instalação crie o arquivo `~/.config/openfortivpn.cfg` com o seguinte conteúdo:
 
 ```ini
-# Coloque o IP/porta reais do gateway. O par IP/porta abaixo é apenas um exemplo fictício
-host = 203.0.113.1
-port = 443
-username = __LOGIN__
-trusted-cert = «digest sha256 do certificado, veja a seção 3.1»
+host = IP do gateway
+port = Porta do gateway
+username = Seu nome de usuário
+trusted-cert = Digest SHA256 do certificado, veja a seção 3.1
 ```
 
 Para se conectar à VPN, execute:
@@ -193,11 +188,10 @@ Após a instalação, crie o arquivo `~/.config/openfortivpn.cfg` com o seguinte
 > usuário/senha para completar a autenticação. Caso contrário, remova os campos `username` e `password`.
 
 ```ini
-# Coloque o IP/porta reais do gateway. O par IP/porta abaixo é apenas um exemplo fictício
-host = 203.0.113.1
-port = 443
-username = none  # remover se openfortivpn ≥ 1.14
-password = none  # remover se openfortivpn ≥ 1.14
+host = IP do gateway
+port = porta do gateway
+username = none # remover se openfortivpn ≥ 1.14
+password = none # remover se openfortivpn ≥ 1.14
 trusted-cert = digest sha256 do certificado, veja a seção 3.1
 user-cert = url do certificado da seção anterior
 ```
@@ -218,8 +212,8 @@ O `trusted-cert` é o identificador do certificado do servidor da VPN (nada mais
 da representação DER do certificado):
 
 ```bash
-# Coloque o IP:porta reais do gateway. O par IP:porta abaixo é apenas um exemplo fictício
-echo | openssl s_client -showcerts -connect 203.0.113.1:443 2>/dev/null | \
+# Substitua «ip:porta» pelos dados reais do gateway.
+echo | openssl s_client -showcerts -connect ip:porta 2>/dev/null | \
   openssl x509 -outform der | \
   openssl dgst -sha256
 ```
