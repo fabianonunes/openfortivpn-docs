@@ -56,7 +56,7 @@ sudo openfortivpn -c ~/.config/openfortivpn.cfg
 ### 2.1. Dependências
 
 <details>
-<summary>2.1.1. Ubuntu 20.04</summary>
+<summary>2.1.1. Ubuntu 20.04 e mais recentes</summary>
 
 Instale as dependências do SO:
 
@@ -251,7 +251,7 @@ Para corrigir, basta fazer um link da biblioteca na pasta correta:
 sudo ln -s /usr/lib/i686-linux-gnu/engines-1.1/pkcs11.so /usr/lib/i386-linux-gnu/engines-1.1/
 ```
 
-### 3.3. Ubuntu 20.04
+### 3.3. Ubuntu >= 20.04
 
 No Ubuntu >= 20.04, a versão do OpenSSL é a 1.1.1d e foi compilada com a opção `-DOPENSSL_TLS_SECURITY_LEVEL=2`.
 Nesse nível de segurança, chaves de 1024 bits são consideradas inseguras e são desativadas por padrão. Ao
@@ -286,6 +286,36 @@ executar o `openfortivpn`:
 ```bash
 sudo OPENSSL_CONF=/path_configuracoes_openssl.cnf openfortivpn -c ~/path_configuracoes_openfortivpn.cfg
 ```
+
+### 3.4. Ubuntu 21.04
+
+A versão `0.21.0` do OpenSC introduziu um bug no momento de informar o status do token para a aplicação.
+Com isso, o seguinte erro é apresentado:
+
+```text
+Failed to enumerate slots
+PKCS11_get_private_key returned NULL
+cannot load Private Key from engine
+```
+
+O bug foi provocado pelo commit [1bb2547a](https://github.com/OpenSC/OpenSC/commit/1bb2547abca12f3ce22d48c3c171ea5e44ab4c4a)
+e revertido pelo commit [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd).
+
+Para resolver o problema, pode-se utilizar um dos três recursos:
+
+* Remover o pacote opensc-pkcs11:
+  
+  ```bash
+  sudo apt-get purge opensc-pkcs11
+  ```
+
+* Remover do p11-kit o módulo do opensc:
+
+  ```bash
+  sudo rm /usr/share/p11-kit/modules/opensc-pkcs11.module
+  ```
+
+* Compilar a partir dos fontes do opensc uma versão após o commit `7a090b99`.
 
 ## 4. Recursos opcionais
 
