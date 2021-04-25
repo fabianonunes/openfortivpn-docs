@@ -299,7 +299,7 @@ cannot load Private Key from engine
 ```
 
 O bug foi provocado pelo commit [1bb2547a](https://github.com/OpenSC/OpenSC/commit/1bb2547abca12f3ce22d48c3c171ea5e44ab4c4a)
-e revertido pelo commit [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd).
+e revertido em [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd).
 
 Para resolver o problema, pode-se utilizar um dos três recursos:
 
@@ -316,6 +316,11 @@ Para resolver o problema, pode-se utilizar um dos três recursos:
   ```
 
 * Compilar a partir dos fontes do opensc uma versão após o commit `7a090b99`.
+  
+  * Essa é a alternativa recomendada caso se utilize o `opensc-pkcs11` para outros fins
+  * Em vez de compilar diretamente dos fontes, recomendo [construir um novo pacote](https://help.ubuntu.com/community/UpdatingADeb)
+    aplicando o patch [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd)
+
 
 ## 4. Recursos opcionais
 
