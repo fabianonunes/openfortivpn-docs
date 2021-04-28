@@ -61,7 +61,7 @@ sudo openfortivpn -c ~/.config/openfortivpn.cfg
 Instale as dependências do SO:
 
 ```bash
-sudo apt-get install pcscd opensc gnutls-bin libengine-pkcs11-openssl openfortivpn
+sudo apt-get install pcscd gnutls-bin libengine-pkcs11-openssl openfortivpn
 ```
 
 </details>
@@ -72,7 +72,7 @@ sudo apt-get install pcscd opensc gnutls-bin libengine-pkcs11-openssl openfortiv
 Primeiro instale as dependências do SO:
 
 ```bash
-sudo apt-get install pcscd opensc gnutls-bin libengine-pkcs11-openssl
+sudo apt-get install pcscd gnutls-bin libengine-pkcs11-openssl
 ```
 
 O pacote `openfortivpn` do Ubuntu 18.04 está na versão 1.6.0, que não é compatível com smartcards. Você pode baixar e instalar o `.deb` do Ubuntu 20.04. Sua instalação é segura, pois depende apenas dos pacotes `libc6 >=2.15` e `libssl1.1 >=1.1.0`, ambos compatíveis com Ubuntu 18.04.
@@ -91,7 +91,7 @@ sudo apt-get install -f ./openfortivpn_1.12.0-1_amd64.deb
 Instale as dependências do SO:
 
 ```bash
-sudo apt-get install pcscd opensc gnutls-bin libengine-pkcs11-openssl pkgconf libssl-dev build-essential git-core autoconf
+sudo apt-get install pcscd gnutls-bin libengine-pkcs11-openssl pkgconf libssl-dev build-essential git-core autoconf
 ```
 
 Não há pacotes do `openfortivpn` pré-compilados para o Ubuntu 18 de 32 bits. Então, precisamos compilar a partir do
@@ -115,7 +115,7 @@ sudo make install
 Instale as dependências do SO:
 
 ```bash
-sudo apt-get install pcscd opensc gnutls-bin p11-kit pkgconf libssl-dev build-essential git-core autoconf
+sudo apt-get install pcscd gnutls-bin p11-kit pkgconf libssl-dev build-essential git-core autoconf
 ```
 
 Desinstale a `libp11` e a `engine-pkcs11` do Ubuntu, caso estejam instaladas:
@@ -253,7 +253,21 @@ sudo ln -s /usr/lib/i686-linux-gnu/engines-1.1/pkcs11.so /usr/lib/i386-linux-gnu
 
 ### 3.3. Ubuntu >= 20.04
 
-No Ubuntu >= 20.04, a versão do OpenSSL é a 1.1.1d e foi compilada com a opção `-DOPENSSL_TLS_SECURITY_LEVEL=2`.
+#### 3.3.1. CRYPTO/Crypto.c:258: init_openssl_crypto: Assertion `lib' failed
+
+A versão `10.0.37` do driver SafeNet exige uma versão da libssl dentro do intervalo
+fixo `>=0.9.8 || <=1.0.1`. Porém, no Ubuntu >=20.04, a libssl está na versão `1.1`.
+Neste caso específico, a compatibilidade não foi comprometidade e é preciso "enganar"
+o driver para que ele encontre a biblioteca correta. Para isso, crie um link apontando
+para a libssl do Ubuntu:
+
+```bash
+sudo ln -s /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 /usr/lib/x86_64-linux-gnu/libcrypto.so
+```
+
+#### 3.3.2. routines:SSL_CTX_use_certificate:ee key too small
+
+No Ubuntu >= 20.04, a versão do OpenSSL foi compilada com a opção `-DOPENSSL_TLS_SECURITY_LEVEL=2`.
 Nesse nível de segurança, chaves de 1024 bits são consideradas inseguras e são desativadas por padrão. Ao
 tentar acessar o `openfortivpn` com uma chave insegura, você pode receber a seguinte mensagem de erro:
 
@@ -287,7 +301,19 @@ executar o `openfortivpn`:
 sudo OPENSSL_CONF=/path_configuracoes_openssl.cnf openfortivpn -c ~/path_configuracoes_openfortivpn.cfg
 ```
 
-### 3.4. Ubuntu 21.04
+### 3.4. Ubuntu 20.04
+
+#### 3.4.1. Segmentation fault
+
+A versão `1.12.0` do openfortivpn retorna `Segmentation fault` logo após a entrada do PIN.
+Este problema pode ser resolvido atualizando o pacote para uma versão mais nova ou removendo
+o atributo `object=...` da URL do certificado.
+
+### 3.5. Ubuntu 21.04
+
+#### Failed to enumerate slots
+
+> Este bug só acontece em distribuições que possuam o PKCS11 do OpenSC instalado.
 
 A versão `0.21.0` do OpenSC introduziu um bug no momento de informar o status do token para a aplicação.
 Com isso, o seguinte erro é apresentado:
@@ -303,24 +329,23 @@ e revertido em [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a6
 
 Para resolver o problema, pode-se utilizar um dos três recursos:
 
-* Remover o pacote opensc-pkcs11:
+* Caso não seja utilizado, remova o pacote opensc-pkcs11:
   
   ```bash
   sudo apt-get purge opensc-pkcs11
   ```
 
-* Remover do p11-kit o módulo do opensc:
+* Caso o OpenSC seja utilizado mas não precisa de integração com o p11-kit, desabilite seu módulo:
 
   ```bash
   sudo rm /usr/share/p11-kit/modules/opensc-pkcs11.module
   ```
 
-* Compilar a partir dos fontes do opensc uma versão após o commit `7a090b99`.
+* Caso o OpenSC não possa ser removido, compile uma nova versão:
   
-  * Essa é a alternativa recomendada caso se utilize o `opensc-pkcs11` para outros fins
+  * Pode-se compilar diretamente dos fontes, contanto que se utilize uma versão com o patch [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd) aplicado.
   * Em vez de compilar diretamente dos fontes, recomendo [construir um novo pacote](https://help.ubuntu.com/community/UpdatingADeb)
     aplicando o patch [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd)
-
 
 ## 4. Recursos opcionais
 
