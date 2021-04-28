@@ -315,8 +315,7 @@ o atributo `object=...` da URL do certificado.
 
 > Este bug só acontece em distribuições que possuam o PKCS11 do OpenSC instalado.
 
-A versão `0.21.0` do OpenSC introduziu um bug no momento de informar o status do token para a aplicação.
-Com isso, o seguinte erro é apresentado:
+A versão `0.21.0` do OpenSC introduziu um bug no momento de informar o status do token para a aplicação:
 
 ```text
 Failed to enumerate slots
@@ -327,15 +326,15 @@ cannot load Private Key from engine
 O bug foi provocado pelo commit [1bb2547a](https://github.com/OpenSC/OpenSC/commit/1bb2547abca12f3ce22d48c3c171ea5e44ab4c4a)
 e revertido em [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd).
 
-Para resolver o problema, pode-se utilizar um dos três recursos:
+Para resolver o problema, pode-se utilizar uma das três alternativas:
 
-* Caso não seja utilizado, remova o pacote opensc-pkcs11:
+* Caso não seja utilizado, remova o pacote `opensc-pkcs11`:
   
   ```bash
   sudo apt-get purge opensc-pkcs11
   ```
 
-* Caso o OpenSC seja utilizado mas não precisa de integração com o p11-kit, desabilite seu módulo:
+* Caso o OpenSC seja utilizado mas não precise de integração com o `p11-kit`, desabilite seu módulo:
 
   ```bash
   sudo rm /usr/share/p11-kit/modules/opensc-pkcs11.module
