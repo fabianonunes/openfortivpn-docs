@@ -311,7 +311,7 @@ o atributo `object=...` da URL do certificado.
 
 ### 3.5. Ubuntu 21.10
 
-#### Failed to enumerate slots
+#### 3.5.1. Failed to enumerate slots
 
 > Este bug só acontece em distribuições que possuam o PKCS11 do OpenSC instalado.
 
