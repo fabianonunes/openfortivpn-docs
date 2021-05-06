@@ -253,19 +253,7 @@ sudo ln -s /usr/lib/i686-linux-gnu/engines-1.1/pkcs11.so /usr/lib/i386-linux-gnu
 
 ### 3.3. Ubuntu >= 20.04
 
-#### 3.3.1. CRYPTO/Crypto.c:258: init_openssl_crypto: Assertion `lib' failed
-
-A versão `10.0.37` do driver SafeNet exige uma versão da libssl dentro do intervalo
-fixo `>=0.9.8 || <=1.0.1`. Porém, no Ubuntu >=20.04, a libssl está na versão `1.1`.
-Neste caso específico, a compatibilidade não foi comprometidade e é preciso "enganar"
-o driver para que ele encontre a biblioteca correta. Para isso, crie um link apontando
-para a libssl do Ubuntu:
-
-```bash
-sudo ln -s /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 /usr/lib/x86_64-linux-gnu/libcrypto.so
-```
-
-#### 3.3.2. routines:SSL_CTX_use_certificate:ee key too small
+#### 3.3.1. routines:SSL_CTX_use_certificate:ee key too small
 
 No Ubuntu >= 20.04, a versão do OpenSSL foi compilada com a opção `-DOPENSSL_TLS_SECURITY_LEVEL=2`.
 Nesse nível de segurança, chaves de 1024 bits são consideradas inseguras e são desativadas por padrão. Ao
@@ -301,19 +289,31 @@ executar o `openfortivpn`:
 sudo OPENSSL_CONF=/path_configuracoes_openssl.cnf openfortivpn -c ~/path_configuracoes_openfortivpn.cfg
 ```
 
-### 3.4. Ubuntu 20.04
+#### 3.3.2. CRYPTO/Crypto.c:258: init_openssl_crypto: Assertion `lib' failed
 
-#### 3.4.1. Segmentation fault
+A versão `10.0.37` do driver SafeNet exige uma versão da libssl dentro do intervalo
+fixo `>=0.9.8 || <=1.0.1`. Porém, no Ubuntu >=20.04, a libssl está na versão `1.1`.
+Neste caso específico, a compatibilidade não foi comprometidade e é preciso "enganar"
+o driver para que ele encontre a biblioteca correta. Para isso, crie um link apontando
+para a libssl do Ubuntu:
+
+```bash
+sudo ln -s /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 /usr/lib/x86_64-linux-gnu/libcrypto.so
+```
+
+#### 3.3.3. Segmentation fault
+
+> Ubuntu 20.04
 
 A versão `1.12.0` do openfortivpn retorna `Segmentation fault` logo após a entrada do PIN.
 Este problema pode ser resolvido atualizando o pacote para uma versão mais nova ou removendo
 o atributo `object=...` da URL do certificado.
 
-### 3.5. Ubuntu 21.10
+#### 3.3.4. Failed to enumerate slots
 
-#### 3.5.1. Failed to enumerate slots
+> Ubuntu 21.10
 
-> Este bug só acontece em distribuições que possuam o PKCS11 do OpenSC instalado.
+Este bug só acontece em distribuições que possuam o PKCS11 do OpenSC instalado.
 
 A versão `0.21.0` do OpenSC introduziu um bug no momento de informar o status do token para a aplicação:
 
