@@ -3,7 +3,7 @@
 Primeiro instale as dependências do SO:
 
 ```bash
-sudo apt-get install pcscd opensc gnutls-bin openssl libpcsclite1
+sudo apt-get install pcscd gnutls-bin openssl libpcsclite1
 ```
 
 ## Driver da leitora
