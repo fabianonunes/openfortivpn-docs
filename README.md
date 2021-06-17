@@ -293,7 +293,7 @@ sudo OPENSSL_CONF=/path_configuracoes_openssl.cnf openfortivpn -c ~/path_configu
 
 A versão `10.0.37` do driver SafeNet exige uma versão da libssl dentro do intervalo
 fixo `>=0.9.8 || <=1.0.1`. Porém, no Ubuntu >=20.04, a libssl está na versão `1.1`.
-Neste caso específico, a compatibilidade não foi comprometidade e é preciso "enganar"
+Neste caso específico, a compatibilidade não foi comprometida e é preciso "enganar"
 o driver para que ele encontre a biblioteca correta. Para isso, crie um link apontando
 para a libssl do Ubuntu:
 
@@ -388,7 +388,7 @@ ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="529/600/*", TAG+="systemd"
 Agora faça as seguintes alterações no openfortivpn.service:
 
 * adicione a diretiva `BindsTo=dev-etoken.device` à seção `[Unit]`
-* adicione a diretiva `WantedBy=dev-etoken.device` à seção `[Install]` (já vi funcionar sem esse ajuste, mas não consigui replicar)
+* adicione a diretiva `WantedBy=dev-etoken.device` à seção `[Install]` (já vi funcionar sem esse ajuste, mas não consegui replicar)
 
 ## 5. Notas
 
