@@ -210,6 +210,14 @@ trusted-cert = Digest sha256 do certificado, veja a seção 3.1
 user-cert = URL do certificado obtido na seção anterior
 ```
 
+#### 2.4.1 Passagem automática do PIN
+
+É possível passar o PIN do token diretamente ao `openfortivpn` para não precisar digitá-lo
+a cada conexão. Basta adicionar `;pin-value=xxxx` ao final da URI do certificado.
+
+O uso do `pin-value` pode ter consequências de segurança, afinal o PIN do token ficará armazenado em um
+arquivo de texto plano.
+
 ### 2.5. Conecte-se à VPN
 
 Para se conectar à VPN, execute:
