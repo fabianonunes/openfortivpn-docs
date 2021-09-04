@@ -336,22 +336,22 @@ e revertido em [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a6
 
 Para resolver o problema, pode-se utilizar uma das três alternativas:
 
-* Caso não seja utilizado, remova o pacote `opensc-pkcs11`:
-  
+- Caso não seja utilizado, remova o pacote `opensc-pkcs11`:
+
   ```bash
   sudo apt-get purge opensc-pkcs11
   ```
 
-* Caso o OpenSC seja utilizado mas não precise de integração com o `p11-kit`, desabilite seu módulo:
+- Caso o OpenSC seja utilizado mas não precise de integração com o `p11-kit`, desabilite seu módulo:
 
   ```bash
   sudo rm /usr/share/p11-kit/modules/opensc-pkcs11.module
   ```
 
-* Caso o OpenSC não possa ser removido, compile uma nova versão:
-  
-  * Pode-se compilar diretamente dos fontes, contanto que se utilize uma versão com o patch [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd) aplicado.
-  * Em vez de compilar diretamente dos fontes, recomendo [construir um novo pacote](https://help.ubuntu.com/community/UpdatingADeb)
+- Caso o OpenSC não possa ser removido, compile uma nova versão:
+
+  - Pode-se compilar diretamente dos fontes, contanto que se utilize uma versão com o patch [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd) aplicado.
+  - Em vez de compilar diretamente dos fontes, recomendo [construir um novo pacote](https://help.ubuntu.com/community/UpdatingADeb)
     aplicando o patch [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd)
 
 ## 4. Recursos opcionais
@@ -395,8 +395,8 @@ ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="529/600/*", TAG+="systemd"
 
 Agora faça as seguintes alterações no openfortivpn.service:
 
-* adicione a diretiva `BindsTo=dev-etoken.device` à seção `[Unit]`
-* adicione a diretiva `WantedBy=dev-etoken.device` à seção `[Install]` (já vi funcionar sem esse ajuste, mas não consegui replicar)
+- adicione a diretiva `BindsTo=dev-etoken.device` à seção `[Unit]`
+- adicione a diretiva `WantedBy=dev-etoken.device` à seção `[Install]` (já vi funcionar sem esse ajuste, mas não consegui replicar)
 
 ## 5. Notas
 
@@ -442,7 +442,7 @@ openssl ciphers -s -v 'ALL:@SECLEVEL=2'
 
 ### 5.5. libp11 e libengine-pkcs11-openssl
 
- No Ubuntu 16.04, não bastasse a biblioteca `libengine-pkcs11-openssl=0.2.1-1` ter sido compilada sem suporte ao `libp11-kit-dev`,
+No Ubuntu 16.04, não bastasse a biblioteca `libengine-pkcs11-openssl=0.2.1-1` ter sido compilada sem suporte ao `libp11-kit-dev`,
 a biblioteca `libp11` não consegue enumerar os certificados de um token pkcs11 (algum bug em `PKCS11_enumerate_certs`). Por isso,
 é necessário compilar uma versão mais recente que a do respositório. Além disso, a partir da versão 0.4.0, a engine e a libp11
 foram integradas no mesmo repositório.
