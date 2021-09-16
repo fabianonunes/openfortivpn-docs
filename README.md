@@ -271,11 +271,30 @@ tentar acessar o `openfortivpn` com uma chave insegura, você pode receber a seg
 ERROR:  PKCS11 SSL_CTX_use_certificate: error:140AB18F:SSL routines:SSL_CTX_use_certificate:ee key too small
 ```
 
-Nesse caso, é preciso afrouxar o nível de segurança para permitir conexões com chaves de 1024 bits. 
-Passe a flag `--seclevel-1` para o comando do `openfortivpn`:
+Nesse caso, é preciso afrouxar o nível de segurança para permitir conexões com chaves de 1024 bits. Esse ajuste pode
+ser feito diretamente no arquivo `/etc/ssl/openssl.cnf` (não recomendável, pois afetaria o `openssl` globalmente) ou
+num arquivo de configuração próprio para o `openfortivpn`.
+
+Crie um arquivo com o seguinte conteúdo:
+
+```ini
+openssl_conf = default_conf
+
+[default_conf]
+ssl_conf = ssl_sect
+
+[ssl_sect]
+system_default = system_default_sect
+
+[system_default_sect]
+CipherString = DEFAULT@SECLEVEL=1
+```
+
+Agora basta passar o _path_ **absoluto** desse arquivo para a variável de ambiente `OPENSSL_CONF` ao
+executar o `openfortivpn`:
 
 ```bash
-sudo openfortivpn --seclevel-1 -c ~/path_configuracoes_openfortivpn.cfg
+sudo OPENSSL_CONF=/path_configuracoes_openssl.cnf openfortivpn -c ~/path_configuracoes_openfortivpn.cfg
 ```
 
 #### 3.3.2. CRYPTO/Crypto.c:258: init_openssl_crypto: Assertion `lib' failed
