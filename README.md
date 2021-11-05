@@ -354,6 +354,10 @@ Para resolver o problema, pode-se utilizar uma das três alternativas:
   - Em vez de compilar diretamente dos fontes, recomendo [construir um novo pacote](https://help.ubuntu.com/community/UpdatingADeb)
     aplicando o patch [7a090b99](https://github.com/OpenSC/OpenSC/commit/7a090b994e70a63a59825142dd6182332931bcdd)
 
+### 3.3.5. SSL_CTX_use_certificate_chain_file: error:140DC002:SSL routines:use_certificate_chain_file:system lib
+
+A versão 1.17.0 do openfortivpn removeu [inadvertidamente](https://github.com/adrienverge/openfortivpn/issues/931) o suporte às engines do OpenSSL. O bug foi [corrigido](https://github.com/adrienverge/openfortivpn/pull/932) na versão 1.17.1.
+
 ## 4. Recursos opcionais
 
 > Esta seção é opcional. Pode ser completamente ignorada.
